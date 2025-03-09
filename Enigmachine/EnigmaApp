@@ -1,0 +1,35 @@
+import sys
+from PyQt5 import QtWidgets
+from true_main_interface import Ui_MainWindow
+from classe_enigma import Enigma
+
+class EnigmaApp(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+        # Initialisation de la machine Enigma
+        self.enigma = Enigma(1, 2, 3, 1)  # Exemple de configuration
+        self.enigma.Set_Configuration_depart("A", "A", "A")
+        self.enigma.Set_cablage_depart("AB CD EF GH IJ KL")
+
+        # Connecter les boutons
+        self.ui.pushButton.clicked.connect(self.encode_message)
+        self.ui.pushButton_2.clicked.connect(self.decode_message)
+
+    def encode_message(self):
+        message = self.ui.QTextEdit_Entree.toPlainText().upper()
+        encrypted_text = "".join(self.enigma.Decodagelettre(l) if l != " " else " " for l in message)
+        self.ui.QTextEdit_Sortie.setPlainText(encrypted_text)
+
+    def decode_message(self):
+        message = self.ui.QTextEdit_Entree.toPlainText().upper()
+        decrypted_text = "".join(self.enigma.Decodagelettre(l) if l != " " else " " for l in message)
+        self.ui.QTextEdit_Sortie.setPlainText(decrypted_text)
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = EnigmaApp()
+    window.show()
+    sys.exit(app.exec_())

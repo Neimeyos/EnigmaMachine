@@ -1,0 +1,7 @@
+aa = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+g = 0
+
+for i in range(0, aa):
+	g =+ 1
+	print(g)
